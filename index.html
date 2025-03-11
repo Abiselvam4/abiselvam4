@@ -14,7 +14,7 @@
 <body class="container" style="margin-top: 50px; width: 50%; height:auto;">
 	
 	<h2 class="text-primary" style="margin-left: 15px; margin-bottom: 10px">
-		Toggle ON/OFF Status
+		Toggle ON/OFF/Over Status
 	</h2>
 	
 	<form class="container" id="controlForm">
@@ -27,8 +27,13 @@
 					</button>
 					
 					<!-- OFF Button -->
-					<button type="button" class="btn btn-danger" id="btnOff">
+					<button type="button" class="btn btn-danger" id="btnOff" style="margin-right: 10px;">
 						OFF
+					</button>
+
+					<!-- OVER Button -->
+					<button type="button" class="btn btn-info" id="btnOver">
+						OVER
 					</button>
 				</div>
 			</div>
@@ -57,7 +62,7 @@
 		firebase.initializeApp(firebaseConfig);
 
 		// Reference to the Firebase Realtime Database
-		let statusRef = firebase.database().ref('status');  // Node for storing ON/OFF status
+		let statusRef = firebase.database().ref('status');  // Node for storing status
 		
 		// Global variable to hold the current status
 		let currentStatus = '';
@@ -71,6 +76,10 @@
 			currentStatus = 'OFF';  // Set status to OFF
 		});
 
+		document.getElementById('btnOver').addEventListener('click', function() {
+			currentStatus = 'Over';  // Set status to Over
+		});
+
 		// Listen for form submission
 		document.getElementById('controlForm').addEventListener('submit', submitForm);
 
@@ -78,7 +87,7 @@
 		function submitForm(e) {
 			e.preventDefault();
 			if (currentStatus === '') {
-				alert('Please select ON or OFF before submitting.');
+				alert('Please select ON, OFF, or OVER before submitting.');
 				return;
 			}
 
